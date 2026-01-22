@@ -826,6 +826,8 @@ RefreshGrid();
 
 ## 18. Checklist pentru Concurs
 
+### RULEZI NON-STOP dupa fiecare implementare. Daca ai facut deja o parte din cerinte. Salvezi proiectul intr-o arhiva (RAR,ZIP) inainte sa te apuci de celelalte cerinte. Ca sa ai ce sa arati in caz de strici ceva.
+
 ### Înainte să scrii cod:
 - [ ] Citește cerințele de 2 ori
 - [ ] Stabilește ce clase îți trebuie
@@ -835,28 +837,11 @@ RefreshGrid();
 ### UI:
 - [ ] Toate butoanele au text clar
 - [ ] Câmpurile au etichete (labels)
-- [ ] Tab order corect (View → Tab Order)
-
-### Funcționalitate:
-- [ ] Adăugare funcționează
-- [ ] Afișare în grid funcționează
-- [ ] Editare funcționează
-- [ ] Ștergere cere confirmare
-- [ ] Căutare/filtrare funcționează
-- [ ] Datele se salvează în fișier
-- [ ] Datele se încarcă la pornire
-
-### Gestionare timp:
-1. **Primele 20%**: UI de bază, formularele se deschid
-2. **Următoarele 40%**: Adaugă, afișează, salvează/încarcă
-3. **Următoarele 25%**: Editare, ștergere, căutare
-4. **Ultimele 15%**: Validări, mesaje de eroare, cazuri speciale
 
 ### Dacă te blochezi:
 1. Compilează? Repară erorile!
-2. Pune `MessageBox.Show("Am ajuns aici")` pentru a vedea unde ajunge codul
+2. Pune `MessageBox.Show("Am ajuns aici")` pentru a vedea unde ajunge codul. Sau cum te-am invatat cu breakpoints. Dar daca te incurci in ele sau devin prea greu de ajuns la ele, faci cu MessageBox.
 3. Verifică valorile cu `MessageBox.Show(variabila.ToString())`
-4. Caută pe Google mesajul exact de eroare
 
 ---
 
@@ -906,4 +891,4 @@ form2.ShowDialog()         // deschide formular modal
 
 ---
 
-**Succes la concurs, Ioana!** 🏆
+**Daca inveti toti ce e aici poti sa te contrazici si cu Teo. Cam e toata materia din primul semetru de facultate. ** 🏆
