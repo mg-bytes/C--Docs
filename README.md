@@ -262,7 +262,7 @@ void Timer_Tick(object sender, EventArgs e)
 }
 ```
 
-```
+---
 
 # C# Windows Forms - Cheat Sheet pentru Ioana
 
