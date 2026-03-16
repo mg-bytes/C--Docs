@@ -1,3 +1,269 @@
+
+---
+!!!!
+Am scris majoritateaz variabilelor cu var. var in C# poate lua orice forma, e un mod mai simlpu de a scrie.
+EX:
+
+int a = 0; // Aici stii ca a e un int.
+var b = 0; // Aici programul deduce singur ce ar fi b in functie de ce e dupa egal. In C++ exista asa ceva si se numeste auto in loc de var.
+Merge cu absolut orice, clase create de tine, clasele deja prestabilite (int, float, double, char, string, List orice)
+
+var text = "Buna Igwana" <=> string text = "Buna Igwana"
+
+Iti zic asta pentru ca la olimpiada e mai usor cam sa pui var peste tot si mai rapid. Isi da seama programul in functie de ce e dupa egal.
+
+
+
+
+### 1. Navigare între formulare
+!!! Close inchide complet formularul, hide il baga doar in bara cum ar veni.
+```csharp
+this.Hide();                          // ascunde formularul curent
+new FormUrmator().Show();             // deschide nou
+
+this.Close();                         // închide curent
+new FormUrmator(variabila).Show();    // pasezi date si il descide
+```
+
+---
+
+### 2. AppData static
+```csharp
+static class AppData
+{
+    public static List<Insula> Insule = new List<Insula>();
+    public static string Resurse = Path.Combine(
+        Application.StartupPath, "NumeFolderResurse");
+}
+```
+Accesat de oriunde direct: `AppData.Insule`
+
+---
+
+### 3. Citit fișier
+```csharp
+foreach (string linie in File.ReadAllLines(
+    Path.Combine(AppData.Resurse, "fisier.txt")))
+{
+    string[] p = linie.Split(';'); // sau '#' sau orice separator, te gandesti mereu la despartirea a doi gujbeti
+    // p[0], p[1], p[2]...
+}
+```
+
+---
+
+### 4. Clase simple
+```csharp
+class Insula
+{
+    public int Id { get; set; }
+    public string Nume { get; set; }
+    public int X { get; set; }
+    public int Y { get; set; }
+    public bool AreBogatii { get; set; }
+    public bool AreVirusuri { get; set; }
+
+    CE LIPSESTE AICI?? :) 
+
+}
+```
+
+---
+
+### 5. List — operații esențiale
+```csharp
+lista.Add(obiect);
+lista.Remove(obiect);
+lista.Count;
+
+// Căutare
+var x = lista.FirstOrDefault(i => i.Id == 5);
+bool exista = lista.Any(i => i.Nume == "Ana");
+
+// Filtrare + sortare + primele N
+var top3 = lista
+    .Where(i => i.TipJoc == 0) // Adica toate elementele din lista unde tipul de joc este = 0.
+    .OrderByDescending(i => i.Punctaj) // Descrescator in functie de Punctaj. Crescator era OrderByAscending(i => i.Punctaj)
+    .Take(3) // Primele 3 elemente din lista
+    .ToList(); // Mereu la final adaugi ToList(); ca sa iti creeze o lista pe care o mai poti manipula ulterior daca ai nevoie.
+```
+
+---
+
+### 6. Validare input
+```csharp
+if (int.TryParse(textBox1.Text, out int n) && n >= 30 && n <= 200)
+{
+    // valid
+}
+else
+{
+    MessageBox.Show("Eroare!");
+    textBox1.Clear();
+}
+```
+
+---
+
+### 7. PasswordChar
+```csharp
+textBoxParola.PasswordChar = '*';
+```
+
+---
+
+### 8. PictureBox cu imagine din fișier
+```csharp
+pictureBox1.Image = Image.FromFile(
+    Path.Combine(AppData.Resurse, "imagine.png"));
+pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+```
+
+---
+
+### 9. Controale dinamice
+```csharp
+PictureBox pb = new PictureBox();
+pb.Image = Image.FromFile(cale);
+pb.Size = new Size(50, 50);
+pb.Location = new Point(x - 25, y - 25);
+pb.SizeMode = PictureBoxSizeMode.StretchImage;
+pb.Click += (s, e) => MetodaClick();
+panel1.Controls.Add(pb);
+```
+
+---
+
+### 10. Timer
+```csharp
+Timer timer = new Timer();
+timer.Interval = 1000;
+timer.Tick += (s, e) => {
+    // logică repetată
+    panel1.Invalidate(); // redesenează dacă e cazul
+};
+timer.Start();
+timer.Stop();
+```
+
+---
+
+### 11. Desenat pe Panel
+```csharp
+// În Load:
+panel1.Paint += Panel1_Paint;
+
+void Panel1_Paint(object sender, PaintEventArgs e)
+{
+    Graphics g = e.Graphics;
+    g.FillEllipse(Brushes.White, x, y, 20, 20);
+    g.FillRectangle(Brushes.Green, x, y, 20, 20);
+    g.DrawLine(new Pen(Color.Green, 2), p1, p2);
+    g.DrawString("text", Font, Brushes.White, x, y);
+}
+
+// Când vrei să redesenezi:
+panel1.Invalidate();
+```
+
+---
+
+### 12. Random
+```csharp
+Random rnd = new Random();
+int nr = rnd.Next(10, 101);       // 10 până la 100 inclusiv
+int i = rnd.Next(lista.Count);    // index aleator din listă
+```
+
+---
+
+### 13. KeyPreview + taste
+```csharp
+// În constructor:
+this.KeyPreview = true;
+
+private void Form_KeyDown(object sender, KeyEventArgs e)
+{
+    if (e.KeyCode == Keys.A) { }
+    if (e.KeyCode == Keys.W) { }
+    if (e.Control && e.KeyCode == Keys.S) { }
+}
+```
+
+---
+
+### 14. SaveFileDialog + salvat imagine
+```csharp
+SaveFileDialog sfd = new SaveFileDialog();
+sfd.FileName = "TraseuExplorator.jpg";
+sfd.Filter = "JPEG|*.jpg";
+
+if (sfd.ShowDialog() == DialogResult.OK)
+{
+    Bitmap bmp = new Bitmap(panel1.Width, panel1.Height);
+    panel1.DrawToBitmap(bmp, panel1.ClientRectangle);
+    bmp.Save(sfd.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+}
+```
+
+---
+
+### 15. Scris în fișier
+```csharp
+// Suprascrie tot:
+File.WriteAllLines(cale, lista.Select(
+    r => $"{r.Id};{r.TipJoc};{r.Email};{r.Punctaj}"));
+
+// Adaugă o linie:
+File.AppendAllText(cale, $"{r.Id};{r.TipJoc}\n");
+```
+
+---
+
+### 16. RadioButton + Button dezactivat
+```csharp
+btnInregistreaza.Enabled = false;
+
+private void rb_CheckedChanged(object sender, EventArgs e)
+{
+    btnInregistreaza.Enabled = true;
+}
+```
+
+---
+
+### 17. Animare liniară cu Timer
+```csharp
+Point pozCurenta, destinatie;
+int pasi = 30, pasulCurent = 0;
+double pasX, pasY;
+
+void StartAnimatie(Point dest)
+{
+    destinatie = dest;
+    pasX = (dest.X - pozCurenta.X) / (double)pasi;
+    pasY = (dest.Y - pozCurenta.Y) / (double)pasi;
+    pasulCurent = 0;
+    timer.Start();
+}
+
+void Timer_Tick(object sender, EventArgs e)
+{
+    pasulCurent++;
+    pictureBoxBarca.Left += (int)pasX;
+    pictureBoxBarca.Top += (int)pasY;
+
+    if (pasulCurent >= pasi)
+    {
+        timer.Stop();
+        pictureBoxBarca.Location = destinatie;
+        ProcesesazaAcostare();
+    }
+}
+```
+
+```
+
 # C# Windows Forms - Cheat Sheet pentru Ioana
 
 ---
